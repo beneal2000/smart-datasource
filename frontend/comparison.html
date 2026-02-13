@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据源详细比较 - 金融数据管理平台</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/comparison.css">
+    <link rel="icon" href="/assets/金融街小电驴.png" type="image/png">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo-section">
+                <img src="/assets/金融街小电驴.png" alt="Logo" class="logo">
+                <div class="title-section">
+                    <h1>数据源详细比较</h1>
+                    <p class="subtitle">股票、债券指数、期货、期权数据源深度分析</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="qrcode-inline">
+                    <img src="/assets/公众号.jpg" alt="公众号二维码">
+                    <div class="qrcode-text">
+                        <p>若需交流，请扫码加公众号</p>
+                        <p class="sub-text">金融街小电驴</p>
+                    </div>
+                </div>
+                <a href="/" class="nav-link">返回主页</a>
+            </div>
+        </header>
+
+        <nav class="comparison-tabs">
+            <button class="comp-tab-btn active" data-tab="stock-bond">股票与债券指数</button>
+            <button class="comp-tab-btn" data-tab="futures-options">期货与期权</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- 股票与债券指数比较 -->
+            <section id="stock-bond" class="tab-content active">
+                <div class="comparison-section">
+                    <h2 class="section-title">一、A股市场数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>股票数据</th>
+                                    <th>债券数据</th>
+                                    <th>指数数据</th>
+                                    <th>历史数据</th>
+                                    <th>实时性</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>AKShare</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>丰富</td>
+                                    <td>较好</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">95</span></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>Tushare Pro</strong></td>
+                                    <td><span class="badge free">免费/积分</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>非常丰富</td>
+                                    <td>好</td>
+                                    <td>基础免费，高级需积分</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Baostock</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>丰富</td>
+                                    <td>一般</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EFinance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>一般</td>
+                                    <td>实时</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>JQData聚宽</strong></td>
+                                    <td><span class="badge free">免费额度</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>丰富</td>
+                                    <td>好</td>
+                                    <td>每日100万条免费</td>
+                                    <td><span class="score high">82</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RQData米筐</strong></td>
+                                    <td><span class="badge free">免费额度</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>丰富</td>
+                                    <td>好</td>
+                                    <td>免费版有限制</td>
+                                    <td><span class="score medium">78</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wind万得</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>最全面</td>
+                                    <td>实时</td>
+                                    <td>年费数万起</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>东方财富Choice</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>丰富</td>
+                                    <td>实时</td>
+                                    <td>年费数千起</td>
+                                    <td><span class="score medium">65</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <h3>AKShare 详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">AKShare是开源的金融数据接口库，是目前最受欢迎的免费A股数据源之一。</p>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <strong>安装命令：</strong>
+                                        <code>pip install akshare</code>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>官网：</strong>
+                                        <a href="https://akshare.akfamily.xyz/" target="_blank">https://akshare.akfamily.xyz/</a>
+                                    </div>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>完全免费开源，无需注册</li>
+                                            <li>数据种类极其丰富，覆盖股票、基金、债券、期货、期权等</li>
+                                            <li>文档完善，社区活跃</li>
+                                            <li>支持A股、港股、美股行情</li>
+                                            <li>提供宏观经济数据</li>
+                                            <li>更新频繁，功能持续增加</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>请求频率有限制，可能被封IP</li>
+                                            <li>部分数据稳定性一般</li>
+                                            <li>无官方技术支持</li>
+                                            <li>实时性不如付费源</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="data-coverage">
+                                    <h4>📊 数据覆盖范围</h4>
+                                    <div class="coverage-tags">
+                                        <span class="tag">A股行情</span>
+                                        <span class="tag">港股行情</span>
+                                        <span class="tag">美股行情</span>
+                                        <span class="tag">债券数据</span>
+                                        <span class="tag">指数数据</span>
+                                        <span class="tag">基金净值</span>
+                                        <span class="tag">财务报表</span>
+                                        <span class="tag">宏观数据</span>
+                                        <span class="tag">期货数据</span>
+                                        <span class="tag">期权数据</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>Tushare Pro 详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">Tushare Pro是国内最知名的金融数据平台之一，数据质量高，历史数据完整。</p>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <strong>安装命令：</strong>
+                                        <code>pip install tushare</code>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>官网：</strong>
+                                        <a href="https://tushare.pro/" target="_blank">https://tushare.pro/</a>
+                                    </div>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>数据质量高，权威性强</li>
+                                            <li>历史数据非常完整</li>
+                                            <li>数据更新及时</li>
+                                            <li>支持多种金融产品</li>
+                                            <li>接口设计规范</li>
+                                            <li>社区活跃，文档完善</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>需要注册获取Token</li>
+                                            <li>高级数据需要积分</li>
+                                            <li>部分接口收费</li>
+                                            <li>免费用户有请求限制</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="data-coverage">
+                                    <h4>📊 数据覆盖范围</h4>
+                                    <div class="coverage-tags">
+                                        <span class="tag">A股行情</span>
+                                        <span class="tag">指数数据</span>
+                                        <span class="tag">基金数据</span>
+                                        <span class="tag">债券数据</span>
+                                        <span class="tag">期货数据</span>
+                                        <span class="tag">期权数据</span>
+                                        <span class="tag">财务数据</span>
+                                        <span class="tag">宏观数据</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">二、港股市场数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>港股行情</th>
+                                    <th>港股指数</th>
+                                    <th>历史数据</th>
+                                    <th>实时性</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>AKShare</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>丰富</td>
+                                    <td>较好</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Yahoo Finance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>丰富</td>
+                                    <td>一般</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EFinance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>一般</td>
+                                    <td>实时</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wind万得</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>最全面</td>
+                                    <td>实时</td>
+                                    <td>年费数万起</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>最全面</td>
+                                    <td>实时</td>
+                                    <td>年费$24000起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h3>港股数据获取说明</h3>
+                        <div class="card-content">
+                            <p class="description">港股数据相对A股数据源较少，主要依赖以下几种方式获取：</p>
+                            <div class="method-list">
+                                <div class="method-item">
+                                    <h4>1. AKShare 港股接口</h4>
+                                    <p>提供港股实时行情、历史K线、港股通数据等，是目前最全面的免费港股数据源。</p>
+                                    <code>ak.stock_hk_spot()  # 港股实时行情</code>
+                                </div>
+                                <div class="method-item">
+                                    <h4>2. Yahoo Finance</h4>
+                                    <p>通过yfinance库获取港股数据，股票代码格式为"代码.HK"。</p>
+                                    <code>yf.download('0700.HK')  # 腾讯控股</code>
+                                </div>
+                                <div class="method-item">
+                                    <h4>3. EFinance 东方财富</h4>
+                                    <p>提供港股实时行情，数据来源于东方财富网。</p>
+                                    <code>ef.stock.get_quote_history('HK_00700')</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">三、国际市场数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>美股</th>
+                                    <th>欧股</th>
+                                    <th>指数</th>
+                                    <th>债券</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>Yahoo Finance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>Alpha Vantage</strong></td>
+                                    <td><span class="badge free">免费额度</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>免费版有限制</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IEX Cloud</strong></td>
+                                    <td><span class="badge free">免费额度</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>免费版有限制</td>
+                                    <td><span class="score high">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quandl</strong></td>
+                                    <td><span class="badge free">免费/付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>部分免费</td>
+                                    <td><span class="score medium">75</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FRED</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">95</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Polygon.io</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>$199-999/月</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>$24000/年起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <h3>Yahoo Finance (yfinance) 详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">Yahoo Finance是全球最受欢迎的免费金融数据源之一，通过yfinance库可以方便地获取全球股票、指数、ETF等数据。</p>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <strong>安装命令：</strong>
+                                        <code>pip install yfinance</code>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>官网：</strong>
+                                        <a href="https://finance.yahoo.com/" target="_blank">https://finance.yahoo.com/</a>
+                                    </div>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>完全免费，无需注册</li>
+                                            <li>全球市场覆盖，美股、港股、A股ADR等</li>
+                                            <li>历史数据丰富，可追溯数十年</li>
+                                            <li>支持股票、ETF、指数、外汇、加密货币</li>
+                                            <li>API简单易用</li>
+                                            <li>提供基本面数据（PE、市值等）</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>非官方API，可能随时失效</li>
+                                            <li>可能被限流或封IP</li>
+                                            <li>实时性一般，延迟约15分钟</li>
+                                            <li>部分数据可能不准确</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code>import yfinance as yf
+
+# 获取苹果股票数据
+apple = yf.Ticker("AAPL")
+hist = apple.history(period="1mo")
+
+# 获取标普500指数
+sp500 = yf.Ticker("^GSPC")
+sp500.history(period="1y")
+
+# 获取港股（腾讯）
+tencent = yf.Ticker("0700.HK")
+tencent.history(period="1mo")</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>FRED (美联储经济数据) 详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">FRED是美国圣路易斯联邦储备银行提供的经济数据库，是全球最权威的宏观经济数据源之一。</p>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <strong>安装命令：</strong>
+                                        <code>pip install fredapi</code>
+                                    </div>
+                                    <div class="info-item">
+                                        <strong>官网：</strong>
+                                        <a href="https://fred.stlouisfed.org/" target="_blank">https://fred.stlouisfed.org/</a>
+                                    </div>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>完全免费</li>
+                                            <li>数据权威，来自官方机构</li>
+                                            <li>覆盖全球主要经济指标</li>
+                                            <li>历史数据非常长</li>
+                                            <li>数据更新及时</li>
+                                            <li>API设计良好</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>仅限宏观经济数据</li>
+                                            <li>需要申请API Key</li>
+                                            <li>主要覆盖美国经济数据</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="data-coverage">
+                                    <h4>📊 主要数据类型</h4>
+                                    <div class="coverage-tags">
+                                        <span class="tag">GDP</span>
+                                        <span class="tag">CPI</span>
+                                        <span class="tag">失业率</span>
+                                        <span class="tag">利率</span>
+                                        <span class="tag">国债收益率</span>
+                                        <span class="tag">货币供应量</span>
+                                        <span class="tag">贸易数据</span>
+                                        <span class="tag">工业产出</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">四、债券指数数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>中国债券指数</th>
+                                    <th>国际债券指数</th>
+                                    <th>国债收益率</th>
+                                    <th>信用债</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>AKShare</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tushare</strong></td>
+                                    <td><span class="badge free">免费/积分</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>基础免费</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Baostock</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★☆☆☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">75</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FRED</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★☆☆☆☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>-</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">95</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wind万得</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>年费数万起</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>$24000/年起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h2 class="section-title">五、股票债券指数数据源推荐总结</h2>
+                    <div class="recommendation-grid">
+                        <div class="recommendation-card best">
+                            <div class="rec-header">
+                                <span class="rec-badge">最佳推荐</span>
+                                <h3>A股个人投资者</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>首选：AKShare + Tushare Pro</strong></p>
+                                <p>AKShare提供最全面的免费数据，Tushare补充高质量历史数据。两者结合可以满足绝大多数需求。</p>
+                                <div class="install-cmd">
+                                    <code>pip install akshare tushare</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <div class="rec-header">
+                                <span class="rec-badge good">高性价比</span>
+                                <h3>港股投资者</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：AKShare + Yahoo Finance</strong></p>
+                                <p>AKShare提供港股实时行情，Yahoo Finance补充历史数据和国际市场数据。</p>
+                                <div class="install-cmd">
+                                    <code>pip install akshare yfinance</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <div class="rec-header">
+                                <span class="rec-badge good">高性价比</span>
+                                <h3>国际市场</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：Yahoo Finance + Alpha Vantage + FRED</strong></p>
+                                <p>Yahoo Finance覆盖全球股票，Alpha Vantage提供技术指标，FRED提供宏观数据。</p>
+                                <div class="install-cmd">
+                                    <code>pip install yfinance alpha_vantage fredapi</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card pro">
+                            <div class="rec-header">
+                                <span class="rec-badge pro">专业级</span>
+                                <h3>机构用户</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：Wind + Bloomberg</strong></p>
+                                <p>Wind覆盖中国市场最全面，Bloomberg覆盖全球市场。适合专业机构和量化团队。</p>
+                                <p class="price-note">⚠️ 年费数万至数十万</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 期货与期权比较 -->
+            <section id="futures-options" class="tab-content">
+                <div class="comparison-section">
+                    <h2 class="section-title">一、期货数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>国内期货</th>
+                                    <th>国际期货</th>
+                                    <th>历史数据</th>
+                                    <th>实时性</th>
+                                    <th>主力合约</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>AKShare</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>丰富</td>
+                                    <td>较好</td>
+                                    <td>支持</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">95</span></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>Tushare</strong></td>
+                                    <td><span class="badge free">免费/积分</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>丰富</td>
+                                    <td>好</td>
+                                    <td>支持</td>
+                                    <td>基础免费</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EFinance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>一般</td>
+                                    <td>实时</td>
+                                    <td>支持</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RQData</strong></td>
+                                    <td><span class="badge free">免费额度</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>丰富</td>
+                                    <td>好</td>
+                                    <td>支持</td>
+                                    <td>免费额度</td>
+                                    <td><span class="score high">82</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Yahoo Finance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★☆☆☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>丰富</td>
+                                    <td>一般</td>
+                                    <td>不支持</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quandl</strong></td>
+                                    <td><span class="badge free">免费/付费</span></td>
+                                    <td>★★☆☆☆</td>
+                                    <td>★★★★★</td>
+                                    <td>丰富</td>
+                                    <td>好</td>
+                                    <td>支持</td>
+                                    <td>部分免费</td>
+                                    <td><span class="score medium">75</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wind万得</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>最全面</td>
+                                    <td>实时</td>
+                                    <td>支持</td>
+                                    <td>年费数万起</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>最全面</td>
+                                    <td>实时</td>
+                                    <td>支持</td>
+                                    <td>$24000/年起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <h3>AKShare 期货数据详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">AKShare是国内期货数据最全面的免费数据源，支持国内四大期货交易所的所有品种。</p>
+                                <div class="futures-coverage">
+                                    <h4>📊 支持的期货交易所</h4>
+                                    <div class="exchange-grid">
+                                        <div class="exchange-item">
+                                            <strong>上期所 (SHFE)</strong>
+                                            <span>铜、铝、锌、铅、镍、锡、黄金、白银、原油等</span>
+                                        </div>
+                                        <div class="exchange-item">
+                                            <strong>大商所 (DCE)</strong>
+                                            <span>豆粕、豆油、玉米、铁矿石、焦炭、焦煤等</span>
+                                        </div>
+                                        <div class="exchange-item">
+                                            <strong>郑商所 (CZCE)</strong>
+                                            <span>棉花、白糖、PTA、甲醇、玻璃、纯碱等</span>
+                                        </div>
+                                        <div class="exchange-item">
+                                            <strong>中金所 (CFFEX)</strong>
+                                            <span>沪深300、中证500、上证50、10年期国债等</span>
+                                        </div>
+                                        <div class="exchange-item">
+                                            <strong>能源中心 (INE)</strong>
+                                            <span>原油、20号胶等</span>
+                                        </div>
+                                        <div class="exchange-item">
+                                            <strong>广期所 (GFEX)</strong>
+                                            <span>工业硅、碳酸锂等</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code>import akshare as ak
+
+# 获取期货主力合约行情
+df = ak.futures_main_sina(symbol="CU0")  # 铜主力合约
+
+# 获取所有期货品种列表
+df = ak.futures_display_main_sina()
+
+# 获取期货仓单数据
+df = ak.get_cffex_rank_table(date="20240115")
+
+# 获取期货持仓排名
+df = ak.futures_inventory_99exchanges()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">二、期权数据源比较</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>ETF期权</th>
+                                    <th>股指期权</th>
+                                    <th>商品期权</th>
+                                    <th>美股期权</th>
+                                    <th> Greeks</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>AKShare</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">92</span></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>Tushare</strong></td>
+                                    <td><span class="badge free">免费/积分</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>-</td>
+                                    <td>★★★★☆</td>
+                                    <td>基础免费</td>
+                                    <td><span class="score high">88</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EFinance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>-</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">78</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Yahoo Finance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score medium">75</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Polygon.io</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>$199-999/月</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wind万得</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>年费数万起</td>
+                                    <td><span class="score medium">68</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>$24000/年起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <h3>AKShare 期权数据详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">AKShare提供国内期权市场最全面的数据，包括ETF期权、股指期权和商品期权。</p>
+                                <div class="options-coverage">
+                                    <h4>📊 支持的期权品种</h4>
+                                    <div class="options-grid">
+                                        <div class="options-category">
+                                            <h5>ETF期权</h5>
+                                            <ul>
+                                                <li>50ETF期权 (上证50)</li>
+                                                <li>300ETF期权 (沪深300)</li>
+                                                <li>500ETF期权 (中证500)</li>
+                                                <li>创业板ETF期权</li>
+                                                <li>深100ETF期权</li>
+                                            </ul>
+                                        </div>
+                                        <div class="options-category">
+                                            <h5>股指期权</h5>
+                                            <ul>
+                                                <li>沪深300股指期权</li>
+                                                <li>中证1000股指期权</li>
+                                                <li>上证50股指期权</li>
+                                            </ul>
+                                        </div>
+                                        <div class="options-category">
+                                            <h5>商品期权</h5>
+                                            <ul>
+                                                <li>铜期权</li>
+                                                <li>黄金期权</li>
+                                                <li>橡胶期权</li>
+                                                <li>豆粕期权</li>
+                                                <li>玉米期权</li>
+                                                <li>铁矿石期权</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code>import akshare as ak
+
+# 获取50ETF期权合约列表
+df = ak.option_sina_sse_list(symbol="商品期权", exchange="null")
+
+# 获取期权实时行情
+df = ak.option_sina_cffex_hs300_spot()
+
+# 获取期权历史行情
+df = ak.option_finance_board(symbol="商品期权")
+
+# 获取期权 Greeks
+df = ak.option_greeks_50etf()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>Tushare 期权数据详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">Tushare提供高质量的期权数据，包括完整的期权链和Greeks计算。</p>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>数据质量高</li>
+                                            <li>提供完整的期权链数据</li>
+                                            <li>支持Greeks计算</li>
+                                            <li>历史数据完整</li>
+                                            <li>支持隐含波动率数据</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>高级数据需要积分</li>
+                                            <li>商品期权数据相对较少</li>
+                                            <li>无美股期权数据</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code>import tushare as ts
+pro = ts.pro_api('your_token')
+
+# 获取期权合约列表
+df = pro.opt_basic(exchange='SSE')
+
+# 获取期权日线行情
+df = pro.opt_daily(ts_code='10002965.SH')
+
+# 获取期权 Greeks
+df = pro.opt_greeks(ts_code='10002965.SH')</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">三、中国交易所期权详细分析</h2>
+                    <div class="exchange-options-intro">
+                        <p class="description">中国期权市场分为场内期权和场外期权，场内期权主要由上交所、深交所和中金所提供。以下是各交易所期权的详细分析。</p>
+                    </div>
+
+                    <div class="exchange-options-grid">
+                        <div class="exchange-option-card">
+                            <div class="exchange-header sse">
+                                <h3>上海证券交易所 (SSE)</h3>
+                                <span class="exchange-badge">ETF期权</span>
+                            </div>
+                            <div class="exchange-body">
+                                <div class="option-products">
+                                    <h4>📋 期权品种</h4>
+                                    <table class="option-detail-table">
+                                        <thead>
+                                            <tr>
+                                                <th>期权名称</th>
+                                                <th>标的</th>
+                                                <th>合约单位</th>
+                                                <th>到期日</th>
+                                                <th>数据源推荐</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>50ETF期权</strong></td>
+                                                <td>50ETF (510050)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>300ETF期权</strong></td>
+                                                <td>沪深300ETF (510300)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>500ETF期权</strong></td>
+                                                <td>中证500ETF (510500)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>科创板50ETF期权</strong></td>
+                                                <td>科创50ETF (588000)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="data-sources">
+                                    <h4>📊 数据获取方式</h4>
+                                    <div class="code-example">
+                                        <pre><code>import akshare as ak
+
+# 获取上交所50ETF期权合约列表
+df = ak.option_sina_sse_list(symbol="50ETF期权", exchange="null")
+
+# 获取期权实时行情
+df = ak.option_sina_sse_spot(symbol="50ETF期权")
+
+# 获取期权历史行情
+df = ak.option_sina_sse_daily(symbol="购8月3200")
+
+# 获取期权Greeks
+df = ak.option_greeks_50etf()</code></pre>
+                                    </div>
+                                </div>
+                                <div class="trading-info">
+                                    <h4>⏰ 交易时间</h4>
+                                    <p>上午: 9:30-11:30 | 下午: 13:00-15:00</p>
+                                    <h4>💰 交易规则</h4>
+                                    <ul>
+                                        <li>最小报价单位: 0.0001元</li>
+                                        <li>涨跌幅限制: 熔断机制</li>
+                                        <li>行权方式: 欧式期权</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="exchange-option-card">
+                            <div class="exchange-header szse">
+                                <h3>深圳证券交易所 (SZSE)</h3>
+                                <span class="exchange-badge">ETF期权</span>
+                            </div>
+                            <div class="exchange-body">
+                                <div class="option-products">
+                                    <h4>📋 期权品种</h4>
+                                    <table class="option-detail-table">
+                                        <thead>
+                                            <tr>
+                                                <th>期权名称</th>
+                                                <th>标的</th>
+                                                <th>合约单位</th>
+                                                <th>到期日</th>
+                                                <th>数据源推荐</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>沪深300ETF期权</strong></td>
+                                                <td>沪深300ETF (159919)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>创业板ETF期权</strong></td>
+                                                <td>创业板ETF (159915)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>中证500ETF期权</strong></td>
+                                                <td>中证500ETF (159922)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>深证100ETF期权</strong></td>
+                                                <td>深100ETF (159901)</td>
+                                                <td>10000份</td>
+                                                <td>到期月第四个周三</td>
+                                                <td>AKShare</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="data-sources">
+                                    <h4>📊 数据获取方式</h4>
+                                    <div class="code-example">
+                                        <pre><code>import akshare as ak
+
+# 获取深交所期权合约列表
+df = ak.option_sina_szse_list(symbol="创业板ETF期权")
+
+# 获取期权实时行情
+df = ak.option_sina_szse_spot(symbol="创业板ETF期权")
+
+# 获取期权历史行情
+df = ak.option_sina_szse_daily(symbol="购8月2500")</code></pre>
+                                    </div>
+                                </div>
+                                <div class="trading-info">
+                                    <h4>⏰ 交易时间</h4>
+                                    <p>上午: 9:30-11:30 | 下午: 13:00-15:00</p>
+                                    <h4>💰 交易规则</h4>
+                                    <ul>
+                                        <li>最小报价单位: 0.0001元</li>
+                                        <li>涨跌幅限制: 熔断机制</li>
+                                        <li>行权方式: 欧式期权</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="exchange-option-card">
+                            <div class="exchange-header cffex">
+                                <h3>中国金融期货交易所 (CFFEX)</h3>
+                                <span class="exchange-badge">股指期权</span>
+                            </div>
+                            <div class="exchange-body">
+                                <div class="option-products">
+                                    <h4>📋 金融期权品种</h4>
+                                    <table class="option-detail-table">
+                                        <thead>
+                                            <tr>
+                                                <th>期权名称</th>
+                                                <th>标的</th>
+                                                <th>合约乘数</th>
+                                                <th>到期日</th>
+                                                <th>数据源推荐</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>沪深300股指期权</strong></td>
+                                                <td>沪深300指数</td>
+                                                <td>100点</td>
+                                                <td>到期月第三个周五</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>中证1000股指期权</strong></td>
+                                                <td>中证1000指数</td>
+                                                <td>100点</td>
+                                                <td>到期月第三个周五</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>上证50股指期权</strong></td>
+                                                <td>上证50指数</td>
+                                                <td>10000点</td>
+                                                <td>到期月第三个周五</td>
+                                                <td>AKShare / Tushare</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="data-sources">
+                                    <h4>📊 数据获取方式</h4>
+                                    <div class="code-example">
+                                        <pre><code>import akshare as ak
+
+# 获取中金所股指期权实时行情
+df = ak.option_sina_cffex_hs300_spot()
+
+# 获取沪深300股指期权历史数据
+df = ak.option_sina_cffex_hs300_daily(symbol="IO2308C4000")
+
+# Tushare获取股指期权
+import tushare as ts
+pro = ts.pro_api('your_token')
+df = pro.opt_daily(exchange='CFFEX')</code></pre>
+                                    </div>
+                                </div>
+                                <div class="trading-info">
+                                    <h4>⏰ 交易时间</h4>
+                                    <p>上午: 9:30-11:30 | 下午: 13:00-15:00</p>
+                                    <h4>💰 交易规则</h4>
+                                    <ul>
+                                        <li>最小变动价位: 0.2点</li>
+                                        <li>涨跌幅限制: 上一交易日收盘价±10%</li>
+                                        <li>行权方式: 欧式期权</li>
+                                        <li>现金交割</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="exchange-option-card">
+                            <div class="exchange-header commodity">
+                                <h3>商品期货交易所</h3>
+                                <span class="exchange-badge">商品期权</span>
+                            </div>
+                            <div class="exchange-body">
+                                <div class="option-products">
+                                    <h4>📋 商品期权品种</h4>
+                                    <div class="commodity-options-grid">
+                                        <div class="commodity-exchange">
+                                            <h5>上期所期权</h5>
+                                            <ul>
+                                                <li>铜期权</li>
+                                                <li>黄金期权</li>
+                                                <li>天然橡胶期权</li>
+                                                <li>铝期权</li>
+                                                <li>锌期权</li>
+                                            </ul>
+                                        </div>
+                                        <div class="commodity-exchange">
+                                            <h5>大商所期权</h5>
+                                            <ul>
+                                                <li>豆粕期权</li>
+                                                <li>玉米期权</li>
+                                                <li>铁矿石期权</li>
+                                                <li>液化石油气期权</li>
+                                                <li>聚丙烯期权</li>
+                                            </ul>
+                                        </div>
+                                        <div class="commodity-exchange">
+                                            <h5>郑商所期权</h5>
+                                            <ul>
+                                                <li>白糖期权</li>
+                                                <li>棉花期权</li>
+                                                <li>PTA期权</li>
+                                                <li>甲醇期权</li>
+                                                <li>菜籽粕期权</li>
+                                            </ul>
+                                        </div>
+                                        <div class="commodity-exchange">
+                                            <h5>广期所期权</h5>
+                                            <ul>
+                                                <li>工业硅期权</li>
+                                                <li>碳酸锂期权</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="data-sources">
+                                    <h4>📊 数据获取方式</h4>
+                                    <div class="code-example">
+                                        <pre><code>import akshare as ak
+
+# 获取商品期权合约列表
+df = ak.option_sina_sse_list(symbol="商品期权", exchange="null")
+
+# 获取铜期权实时行情
+df = ak.option_current_em()
+
+# 获取商品期权历史数据
+df = ak.option_finance_board(symbol="商品期权")</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options-summary">
+                        <h3>📈 交易所期权数据源推荐</h3>
+                        <div class="recommendation-grid">
+                            <div class="recommendation-card best">
+                                <div class="rec-header">
+                                    <span class="rec-badge">最佳推荐</span>
+                                    <h3>ETF期权</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>AKShare + Tushare</strong></p>
+                                    <p>AKShare提供实时行情和合约列表，Tushare提供高质量历史数据和Greeks。</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-card">
+                                <div class="rec-header">
+                                    <span class="rec-badge good">高性价比</span>
+                                    <h3>股指期权</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>AKShare + Tushare</strong></p>
+                                    <p>中金所股指期权数据完整，支持IO/IM/MO三大品种。</p>
+                                </div>
+                            </div>
+                            <div class="recommendation-card">
+                                <div class="rec-header">
+                                    <span class="rec-badge good">高性价比</span>
+                                    <h3>商品期权</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>AKShare</strong></p>
+                                    <p>覆盖四大商品交易所全部期权品种，完全免费。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">四、加密货币（币圈）期货期权数据源</h2>
+                    <div class="crypto-intro">
+                        <p class="description">加密货币市场提供丰富的期货和期权产品，主要交易所包括Binance、OKX、Bybit等。以下是主流币圈交易所的数据源比较。</p>
+                    </div>
+
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>交易所</th>
+                                    <th>类型</th>
+                                    <th>永续合约</th>
+                                    <th>交割合约</th>
+                                    <th>期权</th>
+                                    <th>API质量</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>Binance (币安)</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">98</span></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td><strong>OKX (欧易)</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">95</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bybit</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">92</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Deribit</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bitget</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gate.io</strong></td>
+                                    <td><span class="badge crypto">交易所</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>免费API</td>
+                                    <td><span class="score medium">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CoinGecko</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>★★★★☆</td>
+                                    <td>免费</td>
+                                    <td><span class="score high">90</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CoinMarketCap</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>★★★★☆</td>
+                                    <td>免费API</td>
+                                    <td><span class="score high">88</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <h3>Binance (币安) 期货期权详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">币安是全球最大的加密货币交易所，提供最全面的期货和期权产品，API文档完善，支持Python SDK。</p>
+                                <div class="crypto-products">
+                                    <h4>📊 产品类型</h4>
+                                    <div class="product-grid">
+                                        <div class="product-item">
+                                            <strong>USDT永续合约</strong>
+                                            <span>BTCUSDT, ETHUSDT等，支持125倍杠杆</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>币本位永续合约</strong>
+                                            <span>BTCUSD, ETHUSD等，支持125倍杠杆</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>交割合约</strong>
+                                            <span>当周、次周、当季、次季合约</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>期权</strong>
+                                            <span>BTC/USDT期权，欧式期权</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code># 安装: pip install python-binance
+
+from binance.client import Client
+from binance.enums import *
+
+client = Client(api_key, api_secret)
+
+# 获取永续合约行情
+futures_prices = client.futures_symbol_ticker()
+
+# 获取K线数据
+klines = client.futures_klines(
+    symbol='BTCUSDT',
+    interval=Client.KLINE_INTERVAL_1HOUR,
+    limit=100
+)
+
+# 获取资金费率
+funding_rate = client.futures_mark_price(symbol='BTCUSDT')
+
+# 获取期权数据
+options = client.options_ticker()</code></pre>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>全球最大交易所，流动性最好</li>
+                                            <li>产品线最全，支持永续、交割、期权</li>
+                                            <li>API文档完善，SDK支持多语言</li>
+                                            <li>支持WebSocket实时数据推送</li>
+                                            <li>无需KYC即可使用公开API</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>部分地区限制访问</li>
+                                            <li>API请求频率有限制</li>
+                                            <li>部分高级功能需要KYC</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>OKX (欧易) 期货期权详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">OKX是领先的加密货币交易所，提供丰富的衍生品交易，API设计优秀，支持模拟盘测试。</p>
+                                <div class="crypto-products">
+                                    <h4>📊 产品类型</h4>
+                                    <div class="product-grid">
+                                        <div class="product-item">
+                                            <strong>永续合约</strong>
+                                            <span>USDT保证金、币保证金永续</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>交割合约</strong>
+                                            <span>当周、次周、当季、次季</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>期权</strong>
+                                            <span>BTC/ETH期权，支持买卖双向</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>杠杆代币</strong>
+                                            <span>3倍杠杆代币</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code># 安装: pip install okx
+
+from okx.PublicData import PublicAPI
+from okx.MarketData import MarketAPI
+
+# 公开数据API（无需认证）
+public_api = PublicAPI()
+market_api = MarketAPI()
+
+# 获取永续合约行情
+instruments = public_api.get_instruments(
+    instType='SWAP'  # 永续合约
+)
+
+# 获取K线数据
+candles = market_api.get_candles(
+    instId='BTC-USDT-SWAP',
+    bar='1H'
+)
+
+# 获取期权合约列表
+options = public_api.get_instruments(
+    instType='OPTION',
+    uly='BTC-USDT'
+)
+
+# 获取资金费率
+funding = public_api.get_funding_rate(
+    instId='BTC-USDT-SWAP'
+)</code></pre>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>API设计规范，文档清晰</li>
+                                            <li>支持模拟盘测试</li>
+                                            <li>期权产品丰富</li>
+                                            <li>支持WebSocket</li>
+                                            <li>中文文档完善</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>部分地区限制</li>
+                                            <li>提币需要KYC</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>Bybit 期货期权详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">Bybit是专注于衍生品交易的交易所，以永续合约闻名，期权产品也在快速发展。</p>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code># 安装: pip install pybit
+
+from pybit.unified_trading import HTTP
+
+session = HTTP(testnet=False)
+
+# 获取永续合约行情
+tickers = session.get_tickers(
+    category="linear",
+    symbol="BTCUSDT"
+)
+
+# 获取K线数据
+kline = session.get_kline(
+    category="linear",
+    symbol="BTCUSDT",
+    interval=60,
+    limit=100
+)
+
+# 获取期权合约
+options = session.get_tickers(
+    category="option"
+)
+
+# 获取资金费率
+funding = session.get_funding_rate(
+    category="linear",
+    symbol="BTCUSDT"
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <h3>Deribit 期权详细说明</h3>
+                            <div class="card-content">
+                                <p class="description">Deribit是专注于加密货币期权的交易所，提供最专业的BTC/ETH期权交易。</p>
+                                <div class="crypto-products">
+                                    <h4>📊 期权产品</h4>
+                                    <div class="product-grid">
+                                        <div class="product-item">
+                                            <strong>BTC期权</strong>
+                                            <span>美元结算、币本位结算期权</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>ETH期权</strong>
+                                            <span>美元结算、币本位结算期权</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>SOL期权</strong>
+                                            <span>美元结算期权</span>
+                                        </div>
+                                        <div class="product-item">
+                                            <strong>永续合约</strong>
+                                            <span>BTC/ETH永续</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="code-example">
+                                    <h4>📝 使用示例</h4>
+                                    <pre><code># 安装: pip install deribit-api
+
+from deribit_api import RestClient
+
+client = RestClient(key, secret)
+
+# 获取期权合约
+instruments = client.getinstruments('BTC', 'option')
+
+# 获取期权行情
+ticker = client.ticker('BTC-28MAR25-50000-C')
+
+# 获取期权链
+book = client.getorderbook('BTC-28MAR25-50000-C')
+
+# 获取隐含波动率
+volatility = client.getvolatilityindex('BTC')</code></pre>
+                                </div>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h4>✅ 优点</h4>
+                                        <ul>
+                                            <li>加密货币期权最专业平台</li>
+                                            <li>提供完整的期权链数据</li>
+                                            <li>支持隐含波动率指数</li>
+                                            <li>API功能完善</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h4>❌ 缺点</h4>
+                                        <ul>
+                                            <li>仅支持BTC/ETH/SOL期权</li>
+                                            <li>交易量相对较小</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="crypto-data-sources">
+                        <h3>📈 加密货币数据聚合平台</h3>
+                        <div class="comparison-table-wrapper">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>数据源</th>
+                                        <th>类型</th>
+                                        <th>现货价格</th>
+                                        <th>期货数据</th>
+                                        <th>期权数据</th>
+                                        <th>链上数据</th>
+                                        <th>费用</th>
+                                        <th>推荐指数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="highlight-row">
+                                        <td><strong>CoinGecko</strong></td>
+                                        <td><span class="badge free">免费</span></td>
+                                        <td>★★★★★</td>
+                                        <td>★★★☆☆</td>
+                                        <td>★★☆☆☆</td>
+                                        <td>★★★☆☆</td>
+                                        <td>免费API</td>
+                                        <td><span class="score high">90</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CoinMarketCap</strong></td>
+                                        <td><span class="badge free">免费</span></td>
+                                        <td>★★★★★</td>
+                                        <td>★★★☆☆</td>
+                                        <td>★★☆☆☆</td>
+                                        <td>★★☆☆☆</td>
+                                        <td>免费/付费</td>
+                                        <td><span class="score high">88</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CoinGlass</strong></td>
+                                        <td><span class="badge free">免费</span></td>
+                                        <td>★★★☆☆</td>
+                                        <td>★★★★★</td>
+                                        <td>★★★★☆</td>
+                                        <td>-</td>
+                                        <td>免费</td>
+                                        <td><span class="score high">85</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Coinglass API</strong></td>
+                                        <td><span class="badge free">免费</span></td>
+                                        <td>-</td>
+                                        <td>★★★★★</td>
+                                        <td>★★★★☆</td>
+                                        <td>-</td>
+                                        <td>免费</td>
+                                        <td><span class="score high">85</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Glassnode</strong></td>
+                                        <td><span class="badge paid">付费</span></td>
+                                        <td>★★★★☆</td>
+                                        <td>★★★☆☆</td>
+                                        <td>★★☆☆☆</td>
+                                        <td>★★★★★</td>
+                                        <td>$39-799/月</td>
+                                        <td><span class="score medium">75</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dune Analytics</strong></td>
+                                        <td><span class="badge free">免费</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>★★★★★</td>
+                                        <td>免费/付费</td>
+                                        <td><span class="score high">88</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="summary-section">
+                        <h3>🎯 加密货币期货期权数据源推荐</h3>
+                        <div class="recommendation-grid">
+                            <div class="recommendation-card best">
+                                <div class="rec-header">
+                                    <span class="rec-badge">最佳推荐</span>
+                                    <h3>期货交易</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>Binance + OKX</strong></p>
+                                    <p>两大交易所提供最全面的永续和交割合约，API稳定，流动性最好。</p>
+                                    <div class="install-cmd">
+                                        <code>pip install python-binance okx</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-card">
+                                <div class="rec-header">
+                                    <span class="rec-badge good">专业期权</span>
+                                    <h3>期权交易</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>Deribit + Binance</strong></p>
+                                    <p>Deribit专注期权，Binance提供主流期权产品。</p>
+                                    <div class="install-cmd">
+                                        <code>pip install deribit-api python-binance</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-card">
+                                <div class="rec-header">
+                                    <span class="rec-badge good">数据分析</span>
+                                    <h3>数据聚合</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>CoinGecko + CoinGlass</strong></p>
+                                    <p>CoinGecko获取现货价格，CoinGlass获取期货持仓和清算数据。</p>
+                                    <div class="install-cmd">
+                                        <code>pip install pycoingecko</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recommendation-card pro">
+                                <div class="rec-header">
+                                    <span class="rec-badge pro">专业级</span>
+                                    <h3>链上分析</h3>
+                                </div>
+                                <div class="rec-content">
+                                    <p><strong>Glassnode + Dune</strong></p>
+                                    <p>Glassnode提供专业链上指标，Dune提供自定义链上查询。</p>
+                                    <p class="price-note">⚠️ Glassnode付费版$39-799/月</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">五、国际期货期权数据源</h2>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>数据源</th>
+                                    <th>类型</th>
+                                    <th>CME</th>
+                                    <th>CBOT</th>
+                                    <th>LME</th>
+                                    <th>NYMEX</th>
+                                    <th>美股期权</th>
+                                    <th>费用</th>
+                                    <th>推荐指数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td><strong>Yahoo Finance</strong></td>
+                                    <td><span class="badge free">免费</span></td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★☆☆☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>完全免费</td>
+                                    <td><span class="score high">85</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quandl</strong></td>
+                                    <td><span class="badge free">免费/付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>部分免费</td>
+                                    <td><span class="score high">80</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Polygon.io</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★☆☆</td>
+                                    <td>★★★★☆</td>
+                                    <td>★★★★★</td>
+                                    <td>$199-999/月</td>
+                                    <td><span class="score medium">70</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Interactive Brokers</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>交易佣金</td>
+                                    <td><span class="score medium">75</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bloomberg</strong></td>
+                                    <td><span class="badge paid">付费</span></td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>★★★★★</td>
+                                    <td>$24000/年起</td>
+                                    <td><span class="score low">50</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="exchange-info">
+                        <h3>主要国际期货交易所说明</h3>
+                        <div class="exchange-detail-grid">
+                            <div class="exchange-detail">
+                                <h4>CME (芝加哥商品交易所)</h4>
+                                <p>全球最大的期货交易所，主要交易品种：标普500期货、纳斯达克100期货、欧元期货、日元期货等。</p>
+                            </div>
+                            <div class="exchange-detail">
+                                <h4>CBOT (芝加哥期货交易所)</h4>
+                                <p>历史最悠久的期货交易所，主要交易品种：玉米、大豆、小麦、美国国债期货等。</p>
+                            </div>
+                            <div class="exchange-detail">
+                                <h4>LME (伦敦金属交易所)</h4>
+                                <p>全球最大的有色金属交易所，主要交易品种：铜、铝、锌、铅、镍、锡等。</p>
+                            </div>
+                            <div class="exchange-detail">
+                                <h4>NYMEX (纽约商品交易所)</h4>
+                                <p>能源和贵金属交易中心，主要交易品种：原油、天然气、黄金、白银、铂金等。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h2 class="section-title">六、期货期权数据源推荐总结</h2>
+                    <div class="recommendation-grid">
+                        <div class="recommendation-card best">
+                            <div class="rec-header">
+                                <span class="rec-badge">最佳推荐</span>
+                                <h3>国内期货交易者</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>首选：AKShare</strong></p>
+                                <p>提供国内四大期货交易所全部品种数据，完全免费，数据更新及时，支持主力合约自动切换。</p>
+                                <div class="install-cmd">
+                                    <code>pip install akshare</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <div class="rec-header">
+                                <span class="rec-badge good">高性价比</span>
+                                <h3>期权交易者</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：AKShare + Tushare</strong></p>
+                                <p>AKShare提供基础期权数据，Tushare提供高质量Greeks和隐含波动率数据。</p>
+                                <div class="install-cmd">
+                                    <code>pip install akshare tushare</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <div class="rec-header">
+                                <span class="rec-badge good">高性价比</span>
+                                <h3>国际期货</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：Yahoo Finance + Quandl</strong></p>
+                                <p>Yahoo Finance提供基础行情，Quandl提供更专业的期货数据，部分免费。</p>
+                                <div class="install-cmd">
+                                    <code>pip install yfinance quandl</code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommendation-card pro">
+                            <div class="rec-header">
+                                <span class="rec-badge pro">专业级</span>
+                                <h3>量化机构</h3>
+                            </div>
+                            <div class="rec-content">
+                                <p><strong>推荐：Wind + Bloomberg + IB</strong></p>
+                                <p>Wind覆盖国内市场，Bloomberg覆盖全球市场，IB提供实时交易数据。</p>
+                                <p class="price-note">⚠️ 年费数十万起</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <h2 class="section-title">七、期货期权数据获取注意事项</h2>
+                    <div class="notice-grid">
+                        <div class="notice-card">
+                            <h4>⚠️ 主力合约切换</h4>
+                            <p>期货有到期日，主力合约会定期切换。使用数据时需注意获取主力连续合约，避免数据断层。</p>
+                        </div>
+                        <div class="notice-card">
+                            <h4>⚠️ 交易时间</h4>
+                            <p>不同品种交易时间不同，夜盘数据获取需注意时间处理。部分数据源夜盘数据更新有延迟。</p>
+                        </div>
+                        <div class="notice-card">
+                            <h4>⚠️ 期权到期日</h4>
+                            <p>期权有明确的到期日，近月合约流动性最好。历史数据需注意合约月份的选择。</p>
+                        </div>
+                        <div class="notice-card">
+                            <h4>⚠️ 数据频率限制</h4>
+                            <p>免费数据源通常有请求频率限制，高频数据获取建议使用付费数据源或本地缓存。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>数据源详细比较 | Powered by 金融街小电驴</p>
+        </footer>
+    </div>
+
+    <script src="static/js/comparison.js"></script>
+</body>
+</html>

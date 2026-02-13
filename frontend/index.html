@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据源扫描系统 - 金融数据管理平台</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="/assets/金融街小电驴.png" type="image/png">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo-section">
+                <img src="/assets/金融街小电驴.png" alt="Logo" class="logo">
+                <div class="title-section">
+                    <h1>数据源扫描系统</h1>
+                    <p class="subtitle">金融数据管理平台</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-sources">0</span>
+                        <span class="stat-label">数据源</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="free-sources">0</span>
+                        <span class="stat-label">免费</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="installed-sources">0</span>
+                        <span class="stat-label">已安装</span>
+                    </div>
+                </div>
+                <div class="qrcode-inline">
+                    <img src="/assets/公众号.jpg" alt="公众号二维码">
+                    <div class="qrcode-text">
+                        <p>若需交流，请扫码加公众号</p>
+                        <p class="sub-text">金融街小电驴</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="overview">概览</button>
+            <button class="tab-btn" data-tab="sources">数据源列表</button>
+            <button class="tab-btn" data-tab="recommend">智能推荐</button>
+            <button class="tab-btn" data-tab="compare">数据源对比</button>
+            <button class="tab-btn" data-tab="matrix">优先级矩阵</button>
+            <a href="/comparison" class="tab-link">详细比较</a>
+        </nav>
+
+        <main class="main-content">
+            <!-- 概览页面 -->
+            <section id="overview" class="tab-content active">
+                <div class="overview-grid">
+                    <div class="card source-type-card">
+                        <h3>数据源分类</h3>
+                        <div class="type-buttons">
+                            <button class="type-btn china-free" data-type="china_free">
+                                <span class="type-icon">🇨🇳</span>
+                                <span class="type-name">中国免费</span>
+                                <span class="type-count" id="china-free-count">0</span>
+                            </button>
+                            <button class="type-btn china-paid" data-type="china_paid">
+                                <span class="type-icon">🇨🇳</span>
+                                <span class="type-name">中国付费</span>
+                                <span class="type-count" id="china-paid-count">0</span>
+                            </button>
+                            <button class="type-btn intl-free" data-type="international_free">
+                                <span class="type-icon">🌍</span>
+                                <span class="type-name">国际免费</span>
+                                <span class="type-count" id="intl-free-count">0</span>
+                            </button>
+                            <button class="type-btn intl-paid" data-type="international_paid">
+                                <span class="type-icon">🌍</span>
+                                <span class="type-name">国际付费</span>
+                                <span class="type-count" id="intl-paid-count">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card data-type-card">
+                        <h3>数据类型覆盖</h3>
+                        <div class="data-types-grid" id="data-types-grid"></div>
+                    </div>
+
+                    <div class="card top-sources-card">
+                        <h3>Top 5 推荐数据源</h3>
+                        <div class="top-sources-list" id="top-sources-list"></div>
+                    </div>
+
+                    <div class="card install-status-card">
+                        <h3>安装状态</h3>
+                        <div class="install-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="install-progress"></div>
+                            </div>
+                            <span class="progress-text" id="install-text">0/0 已安装</span>
+                        </div>
+                        <button class="btn btn-primary" id="show-missing-btn">查看未安装</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 数据源列表页面 -->
+            <section id="sources" class="tab-content">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label>数据源类型:</label>
+                        <select id="filter-source-type">
+                            <option value="">全部</option>
+                            <option value="china_free">中国免费</option>
+                            <option value="china_paid">中国付费</option>
+                            <option value="international_free">国际免费</option>
+                            <option value="international_paid">国际付费</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>数据类型:</label>
+                        <select id="filter-data-type">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>安装状态:</label>
+                        <select id="filter-install-status">
+                            <option value="">全部</option>
+                            <option value="installed">已安装</option>
+                            <option value="not-installed">未安装</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <input type="text" id="search-input" placeholder="搜索数据源...">
+                    </div>
+                </div>
+                <div class="sources-table-container">
+                    <table class="sources-table" id="sources-table">
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>类型</th>
+                                <th>免费</th>
+                                <th>已安装</th>
+                                <th>优先级</th>
+                                <th>数据类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sources-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 智能推荐页面 -->
+            <section id="recommend" class="tab-content">
+                <div class="recommend-container">
+                    <div class="recommend-selector">
+                        <h3>选择数据类型获取推荐</h3>
+                        <div class="data-type-buttons" id="recommend-type-buttons"></div>
+                    </div>
+                    <div class="recommend-results" id="recommend-results">
+                        <div class="empty-state">
+                            <p>请选择数据类型查看推荐数据源</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 数据源对比页面 -->
+            <section id="compare" class="tab-content">
+                <div class="compare-container">
+                    <div class="compare-selector">
+                        <h3>选择要对比的数据源 (最多5个)</h3>
+                        <div class="compare-checkboxes" id="compare-checkboxes"></div>
+                        <button class="btn btn-primary" id="compare-btn">开始对比</button>
+                    </div>
+                    <div class="compare-results" id="compare-results"></div>
+                </div>
+            </section>
+
+            <!-- 优先级矩阵页面 -->
+            <section id="matrix" class="tab-content">
+                <div class="matrix-container">
+                    <h3>数据源优先级矩阵</h3>
+                    <div class="matrix-table-container">
+                        <table class="matrix-table" id="matrix-table">
+                            <thead id="matrix-thead"></thead>
+                            <tbody id="matrix-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 数据源详情弹窗 -->
+        <div class="modal" id="source-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">数据源详情</h2>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>数据源扫描系统 v1.0.0 | Powered by 金融街小电驴</p>
+        </footer>
+    </div>
+
+    <script src="static/js/app.js"></script>
+</body>
+</html>
