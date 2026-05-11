@@ -13,6 +13,15 @@ app = Flask(__name__,
             template_folder='../frontend')
 CORS(app)
 
+# ---- 挂载文献检索模块（literature_scanner）----
+try:
+    from literature_scanner.web_api import register as _register_literature
+    _register_literature(app)
+except Exception as _e:
+    # 不要因为可选模块的导入失败影响主服务
+    import logging
+    logging.getLogger(__name__).warning("literature_scanner 未加载: %s", _e)
+
 scanner = DataSourceScanner()
 analyzer = DataSourceAnalyzer()
 

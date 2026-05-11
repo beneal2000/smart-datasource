@@ -131,3 +131,76 @@ smartdatasource/
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
+
+
+
+---
+
+## 📚 文献检索模块 (Literature Scanner)
+
+面向 **运动生物力学 / 运动鞋履** 方向的自动化文献扫描系统，和 `data_source_scanner` 并列，
+通过勾选关键词，一次性在多个学术数据库中检索最近 N 天（默认 7 天，按**在线发表日期**）发表的文章，
+调用 **DeepSeek** 生成中文摘要，并导出 PDF 到 `outputs/` 目录。
+
+### 入口
+
+- Web 入口：启动 `python run_web.py`，访问 http://127.0.0.1:5000/literature/
+- API：
+  - `GET  /literature/api/config`：关键词分组 / 可用源 / 期刊列表 / LLM 状态
+  - `POST /literature/api/tasks`：提交检索任务（JSON body: `keywords[]`, `sources[]`, `days`）
+  - `GET  /literature/api/tasks/<id>`：轮询进度，`?include_articles=1` 可返回文章列表
+  - `GET  /literature/api/tasks/<id>/pdf`：下载生成好的 PDF
+
+### 关键词分组
+
+| 分组 | 示例关键词 |
+|------|----------|
+| 鞋履属性 | bending stiffness / cushioning / energy return / traction / slip resistance ... |
+| 鞋与跑步 | running shoes / spike shoes / athletic footwear / jogging / runner ... |
+| 生物力学测量 | gait analysis / kinematics / kinetics / ground reaction force / electromyography ... |
+| 运动项目 | badminton / tennis / football / pickleball / golf ... |
+
+### 支持的检索源
+
+| 源 | 状态 | 说明 |
+|----|------|------|
+| PubMed | ✅ 自动 | NCBI E-utilities 官方 API |
+| CrossRef | ✅ 自动 | 含按期刊 ISSN 精准抓取 J. of Biomechanics / HMS / Sports Biomechanics / Footwear Science |
+| Europe PMC | ✅ 自动 | 补全 OA 全文链接 |
+| OpenAlex | ✅ 自动 | **作为 Google Scholar 的开放替代** |
+| Semantic Scholar | ✅ 自动 | 免费 API（可能被限流，失败自动跳过） |
+| ScienceDirect / T&F | ⚠️ 无开放 API | 已通过 CrossRef ISSN 覆盖对应期刊 |
+| Google Scholar / ResearchGate / Cochrane / EBSCO / CNKI / WoS | ❌ 不支持 | 无开放 API 或需订阅账号；UI 展示但不实际调用 |
+
+### 运行时环境变量
+
+| 变量 | 说明 | 默认 |
+|------|------|------|
+| `DEEPSEEK_API_KEY` | DeepSeek API Key；**未配置时降级为英文摘要截取** | 空 |
+| `DEEPSEEK_BASE_URL` | DeepSeek API base | `https://api.deepseek.com/v1` |
+| `DEEPSEEK_MODEL` | DeepSeek 模型名 | `deepseek-chat` |
+| `LIT_SCANNER_EMAIL` | 传给 CrossRef / OpenAlex 的联系邮箱（API 礼仪） | `literature-scanner@example.com` |
+| `LIT_SCANNER_PER_SOURCE_LIMIT` | 每个源每次拉取上限 | `25` |
+| `LIT_SCANNER_MAX_ARTICLES` | 送 LLM 的最大文章数 | `40` |
+| `LIT_SCANNER_OUTPUT_DIR` | PDF 输出目录 | `./outputs` |
+
+### 目录结构
+
+```
+literature_scanner/
+├── __init__.py
+├── config.py              # 关键词分组 / 期刊 ISSN / 源开关
+├── models.py              # Article, SearchTask, TaskStatus
+├── aggregator.py          # DOI/标题去重 + 命中关键词过滤
+├── summarizer.py          # DeepSeek 中文摘要
+├── pdf_builder.py         # ReportLab 中文 PDF
+├── service.py             # 线程池任务调度
+├── web_api.py             # Flask Blueprint
+└── sources/
+    ├── base.py
+    ├── pubmed.py
+    ├── crossref.py
+    ├── europepmc.py
+    ├── openalex.py
+    └── semantic_scholar.py
+```

@@ -48,3 +48,7 @@ logs/
 # Local config
 *.local
 .env.local
+
+
+# Literature scanner outputs
+outputs/
