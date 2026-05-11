@@ -140,3 +140,11 @@
 @media (max-width: 1024px) {
     .lit-layout { grid-template-columns: 1fr; }
 }
+
+
+.sched-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+}

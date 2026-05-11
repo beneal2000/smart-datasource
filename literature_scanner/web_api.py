@@ -14,11 +14,18 @@ from .config import (
     TARGET_JOURNALS,
     automatable_source_keys,
 )
+from .scheduler import (
+    LiteratureScheduler,
+    SchedulePreset,
+    load_preset,
+    save_preset,
+)
 from .service import LiteratureService
 
 bp = Blueprint("literature", __name__, url_prefix="/literature")
 
 service = LiteratureService.instance()
+scheduler = LiteratureScheduler.instance()
 
 
 @bp.route("/")
@@ -89,6 +96,58 @@ def download_pdf(task_id):
     )
 
 
+@bp.route("/api/schedule", methods=["GET"])
+def schedule_status():
+    """当前调度器状态（下次触发时间、最近一次任务 id 等）"""
+    data = scheduler.status()
+    data["preset"] = {
+        "keywords": load_preset().keywords,
+        "sources": load_preset().sources,
+        "days": load_preset().days,
+    }
+    return jsonify(data)
+
+
+@bp.route("/api/schedule/preset", methods=["POST"])
+def schedule_set_preset():
+    """保存用户当前勾选的关键词/源/天数作为周度任务预设"""
+    payload = request.get_json(silent=True) or {}
+    try:
+        preset = save_preset(SchedulePreset(
+            keywords=payload.get("keywords") or [],
+            sources=payload.get("sources") or [],
+            days=int(payload.get("days", 7)),
+        ))
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    return jsonify({
+        "ok": True,
+        "preset": {
+            "keywords": preset.keywords,
+            "sources": preset.sources,
+            "days": preset.days,
+        },
+    })
+
+
+@bp.route("/api/schedule/run-now", methods=["POST"])
+def schedule_run_now():
+    """按当前预设立即跑一次（手动触发，用于测试）"""
+    try:
+        task_id = scheduler.trigger_now()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    return jsonify({"task_id": task_id}), 202
+
+
 def register(app):
     """挂到现有 Flask app 上"""
     app.register_blueprint(bp)
+    # 启动调度器（默认：每周一 10:00 本地时间）
+    # Flask debug reloader 会 fork 两次；只在真正的 worker 进程里启动
+    import os
+    if (
+        not app.debug
+        or os.environ.get("WERKZEUG_RUN_MAIN") == "true"
+    ):
+        scheduler.start()

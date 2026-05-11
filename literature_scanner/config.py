@@ -231,3 +231,23 @@ OUTPUT_DIR = os.environ.get(
     "LIT_SCANNER_OUTPUT_DIR",
     os.path.join(os.path.dirname(os.path.dirname(__file__)), "outputs"),
 )
+
+
+# ---------- 定时任务 ----------
+# 是否启用周度自动检索任务（后台线程）
+SCHEDULER_ENABLED = (
+    os.environ.get("LIT_SCANNER_SCHEDULE_ENABLED", "1").lower()
+    not in ("0", "false", "no", "off")
+)
+# 触发时间：0=Monday ~ 6=Sunday，本地时间；默认周一 10:00
+SCHEDULER_WEEKDAY = int(os.environ.get("LIT_SCANNER_SCHEDULE_WEEKDAY", "0"))
+SCHEDULER_HOUR = int(os.environ.get("LIT_SCANNER_SCHEDULE_HOUR", "10"))
+SCHEDULER_MINUTE = int(os.environ.get("LIT_SCANNER_SCHEDULE_MINUTE", "0"))
+# 时区名：为空时使用服务器本地时区
+SCHEDULER_TZ_NAME = os.environ.get("LIT_SCANNER_SCHEDULE_TZ", "")
+# 预设（当前的关键词 + 源 + 天数）存放路径
+SCHEDULE_PRESET_PATH = os.environ.get(
+    "LIT_SCANNER_PRESET_PATH",
+    os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                 "outputs", ".schedule_preset.json"),
+)

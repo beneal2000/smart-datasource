@@ -183,6 +183,27 @@ smartdatasource/
 | `LIT_SCANNER_PER_SOURCE_LIMIT` | 每个源每次拉取上限 | `25` |
 | `LIT_SCANNER_MAX_ARTICLES` | 送 LLM 的最大文章数 | `40` |
 | `LIT_SCANNER_OUTPUT_DIR` | PDF 输出目录 | `./outputs` |
+| `LIT_SCANNER_SCHEDULE_ENABLED` | 是否启用周度自动任务 | `1` |
+| `LIT_SCANNER_SCHEDULE_WEEKDAY` | 周几运行（0=周一 ~ 6=周日） | `0` |
+| `LIT_SCANNER_SCHEDULE_HOUR` | 几点运行（0-23） | `10` |
+| `LIT_SCANNER_SCHEDULE_MINUTE` | 几分运行（0-59） | `0` |
+| `LIT_SCANNER_SCHEDULE_TZ` | 时区名（如 `Asia/Shanghai`），空则用服务器本地时区 | 空 |
+| `LIT_SCANNER_PRESET_PATH` | 周度任务预设 JSON 的存放路径 | `./outputs/.schedule_preset.json` |
+
+### 周度自动任务
+
+服务启动后会起一个后台守护线程，默认每周一本地时间 10:00 自动执行一次检索，
+生成的 PDF 落在 `outputs/` 目录。
+
+- 前端「周度自动任务」卡片可：
+  - 查看下次 / 上次运行时间与任务 id
+  - 将当前勾选的关键词 / 源 / 天数保存为**自定义预设**（未保存时使用全量关键词兜底）
+  - **立即运行一次**（用于测试）
+
+- 相关 API：
+  - `GET  /literature/api/schedule` 查看状态
+  - `POST /literature/api/schedule/preset` 保存预设（body: `keywords`, `sources`, `days`）
+  - `POST /literature/api/schedule/run-now` 按当前预设立即触发一次
 
 ### 目录结构
 

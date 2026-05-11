@@ -5,6 +5,9 @@ const API = {
     tasks: '/literature/api/tasks',
     task: (id) => `/literature/api/tasks/${id}`,
     pdf: (id) => `/literature/api/tasks/${id}/pdf`,
+    scheduleStatus: '/literature/api/schedule',
+    schedulePreset: '/literature/api/schedule/preset',
+    scheduleRunNow: '/literature/api/schedule/run-now',
 };
 
 const state = {
@@ -56,6 +59,10 @@ async function init() {
         renderKeywords();
     });
     document.getElementById('submit-btn').addEventListener('click', submitTask);
+    document.getElementById('sched-save').addEventListener('click', savePreset);
+    document.getElementById('sched-run-now').addEventListener('click', runPresetNow);
+    loadScheduleStatus();
+    setInterval(loadScheduleStatus, 30000);  // 每 30s 刷新一次调度状态
 }
 
 function renderSources() {
@@ -253,3 +260,84 @@ function renderArticles(articles) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ========== 定时任务 ==========
+async function loadScheduleStatus() {
+    try {
+        const r = await fetch(API.scheduleStatus);
+        const s = await r.json();
+        const wdNames = ['周一','周二','周三','周四','周五','周六','周日'];
+        const wdName = wdNames[s.weekday] || `Weekday ${s.weekday}`;
+        const tz = s.timezone || '';
+        document.getElementById('sched-summary').textContent =
+            `状态：${s.enabled ? (s.running ? '运行中' : '已配置但未启动') : '已禁用'}  ·  ` +
+            `每 ${wdName} ${pad2(s.hour)}:${pad2(s.minute)} (${tz})  ·  ` +
+            `${s.has_user_preset ? '已保存自定义预设' : '使用默认预设（全量关键词）'}`;
+        document.getElementById('sched-next').textContent =
+            '下次运行：' + (s.next_run ? formatIso(s.next_run) : '--');
+        if (s.last_run) {
+            let line = '上次运行：' + formatIso(s.last_run);
+            if (s.last_task_id) line += ` (任务 ${s.last_task_id})`;
+            if (s.last_error) line += `  错误：${s.last_error}`;
+            document.getElementById('sched-last').textContent = line;
+        } else {
+            document.getElementById('sched-last').textContent = '上次运行：尚未运行';
+        }
+    } catch (e) {
+        document.getElementById('sched-summary').textContent = '加载调度状态失败: ' + e.message;
+    }
+}
+
+async function savePreset() {
+    if (state.selectedKeywords.size === 0 || state.selectedSources.size === 0) {
+        alert('请先勾选至少一个关键词和一个检索源，再保存为周度预设。');
+        return;
+    }
+    try {
+        const r = await fetch(API.schedulePreset, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                keywords: Array.from(state.selectedKeywords),
+                sources: Array.from(state.selectedSources),
+                days: parseInt(document.getElementById('days-select').value, 10),
+            }),
+        });
+        if (!r.ok) {
+            const err = await r.json().catch(() => ({}));
+            throw new Error(err.error || `HTTP ${r.status}`);
+        }
+        const data = await r.json();
+        alert(`已保存：${data.preset.keywords.length} 关键词，${data.preset.sources.length} 个源，${data.preset.days} 天`);
+        loadScheduleStatus();
+    } catch (e) {
+        alert('保存预设失败: ' + e.message);
+    }
+}
+
+async function runPresetNow() {
+    if (!confirm('将按当前保存的预设立即执行一次检索，继续？')) return;
+    try {
+        const r = await fetch(API.scheduleRunNow, { method: 'POST' });
+        if (!r.ok) {
+            const err = await r.json().catch(() => ({}));
+            throw new Error(err.error || `HTTP ${r.status}`);
+        }
+        const data = await r.json();
+        state.currentTaskId = data.task_id;
+        document.getElementById('task-actions').style.display = 'none';
+        document.getElementById('articles-list').innerHTML = '';
+        pollTask();
+        loadScheduleStatus();
+    } catch (e) {
+        alert('触发失败: ' + e.message);
+    }
+}
+
+function pad2(n) { return String(n).padStart(2, '0'); }
+function formatIso(iso) {
+    try {
+        const d = new Date(iso);
+        return d.toLocaleString('zh-CN');
+    } catch (e) { return iso; }
+}
