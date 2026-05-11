@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文献检索 - 生物力学 / 运动鞋履</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/literature.css">
+    <link rel="icon" href="/assets/金融街小电驴.png" type="image/png">
+</head>
+<body>
+<div class="app-container">
+    <header class="header">
+        <div class="logo-section">
+            <img src="/assets/金融街小电驴.png" alt="Logo" class="logo">
+            <div class="title-section">
+                <h1>文献检索系统</h1>
+                <p class="subtitle">生物力学 / 运动鞋履 · 自动化文献扫描</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <a class="btn btn-secondary" href="/">返回数据源扫描</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="lit-layout">
+            <!-- 左：配置 -->
+            <div class="lit-panel">
+                <div class="card">
+                    <h3>1. 选择检索源</h3>
+                    <div id="sources-list" class="chips"></div>
+                    <p class="tip" id="sources-tip"></p>
+                </div>
+
+                <div class="card">
+                    <h3>2. 勾选关键词</h3>
+                    <div id="keyword-groups"></div>
+                    <div class="kw-actions">
+                        <button class="btn btn-secondary btn-sm" id="kw-select-all">全选</button>
+                        <button class="btn btn-secondary btn-sm" id="kw-clear-all">清空</button>
+                        <span class="tip" id="kw-count">已选 0 个关键词</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>3. 时间窗 & 状态</h3>
+                    <div class="filter-group">
+                        <label>最近</label>
+                        <select id="days-select">
+                            <option value="7" selected>7 天</option>
+                            <option value="14">14 天</option>
+                            <option value="30">30 天</option>
+                        </select>
+                        <label>的在线发表文章</label>
+                    </div>
+                    <p class="tip" id="llm-status">DeepSeek 状态：加载中...</p>
+                    <button class="btn btn-primary" id="submit-btn">开始检索</button>
+                </div>
+
+                <div class="card">
+                    <h3>4. 周度自动任务</h3>
+                    <p class="tip" id="sched-summary">加载中...</p>
+                    <p class="tip" id="sched-next">下次运行：--</p>
+                    <p class="tip" id="sched-last">上次运行：尚未运行</p>
+                    <div class="sched-actions">
+                        <button class="btn btn-primary btn-sm" id="sched-save">保存当前为预设</button>
+                        <button class="btn btn-secondary btn-sm" id="sched-run-now">立即运行一次</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>5. 目标期刊</h3>
+                    <ul class="journal-list" id="journal-list"></ul>
+                </div>
+            </div>
+
+            <!-- 右：结果 -->
+            <div class="lit-panel">
+                <div class="card">
+                    <h3>任务进度</h3>
+                    <div class="progress-wrap">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="task-progress" style="width:0%"></div>
+                        </div>
+                        <div class="progress-text" id="task-status">尚未提交任务</div>
+                    </div>
+                    <div id="task-actions" style="display:none">
+                        <a class="btn btn-primary" id="download-pdf" href="#" target="_blank">下载 PDF</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>文章列表</h3>
+                    <div id="articles-empty" class="empty-state">
+                        <p>检索完成后，文章及中文摘要会出现在这里。</p>
+                    </div>
+                    <div id="articles-list" class="articles-list"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>文献检索系统 v0.1.0 | Literature Scanner</p>
+    </footer>
+</div>
+
+<script src="/static/js/literature.js"></script>
+</body>
+</html>
