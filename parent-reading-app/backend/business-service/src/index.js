@@ -24,6 +24,8 @@ const userRoutes = require('./routes/user');
 const contentRoutes = require('./routes/content');
 const playRoutes = require('./routes/play');
 const favoriteRoutes = require('./routes/favorite');
+const subscriptionRoutes = require('./routes/subscription');
+const recommendRoutes = require('./routes/recommend');
 const proxyRoutes = require('./routes/aiProxy');
 
 const app = express();
@@ -52,6 +54,8 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/content', contentRoutes);
 app.use('/api/v1/play', playRoutes);
 app.use('/api/v1/favorites', favoriteRoutes);
+app.use('/api/v1/subscription', subscriptionRoutes);
+app.use('/api/v1/recommend', recommendRoutes);
 
 // AI服务代理（需要JWT认证）
 app.use('/api/v1/ai', proxyRoutes);
