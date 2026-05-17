@@ -127,24 +127,62 @@ class TTSService:
     async def _synthesize_fish_audio(
         self, voice_id: str, text: str, speed: float
     ) -> tuple:
-        """Fish Audio TTS合成"""
+        """
+        Fish Audio TTS合成
+
+        API: POST https://api.fish.audio/v1/tts
+        Header: model: s2-pro, Authorization: Bearer <key>
+        Body: {text, reference_id, prosody: {speed}, format, ...}
+        返回: 音频流（chunked）
+        """
+        import uuid as uuid_mod
+
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 f"{settings.FISH_AUDIO_API_URL}/v1/tts",
                 json={
-                    "voice_id": voice_id,
                     "text": text,
-                    "speed": speed,
+                    "reference_id": voice_id,
+                    "temperature": 0.7,
+                    "top_p": 0.7,
+                    "prosody": {
+                        "speed": speed,
+                        "volume": 0,
+                    },
+                    "format": "mp3",
+                    "sample_rate": 44100,
+                    "mp3_bitrate": 128,
+                    "latency": "normal",
+                    "normalize": True,
+                    "chunk_length": 300,
                 },
-                headers={"Authorization": f"Bearer {settings.FISH_AUDIO_API_KEY}"},
+                headers={
+                    "Authorization": f"Bearer {settings.FISH_AUDIO_API_KEY}",
+                    "model": "s2-pro",
+                    "Content-Type": "application/json",
+                },
                 timeout=60,
             )
 
             if response.status_code != 200:
                 raise Exception(f"Fish Audio TTS失败: {response.text}")
 
-            result = response.json()
-            return result["audio_url"], result["duration"]
+            # Fish Audio 返回音频流，保存到本地存储
+            audio_id = str(uuid_mod.uuid4())
+            audio_path = f"{settings.LOCAL_STORAGE_PATH}/tts/{audio_id}.mp3"
+
+            # 确保目录存在
+            import os
+            os.makedirs(os.path.dirname(audio_path), exist_ok=True)
+
+            with open(audio_path, "wb") as f:
+                f.write(response.content)
+
+            audio_url = f"/storage/tts/{audio_id}.mp3"
+            # 估算时长（MP3 128kbps）
+            duration = len(response.content) / (128 * 1024 / 8)
+
+            return audio_url, duration
 
     async def _synthesize_elevenlabs(
         self, voice_id: str, text: str, speed: float

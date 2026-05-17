@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # 声音克隆引擎配置
-    VOICE_CLONE_ENGINE: str = "cosyvoice"  # cosyvoice | fish_audio | elevenlabs
+    VOICE_CLONE_ENGINE: str = "fish_audio"  # cosyvoice | fish_audio | elevenlabs
     COSYVOICE_API_URL: str = "http://localhost:8080"
     COSYVOICE_API_KEY: Optional[str] = None
     FISH_AUDIO_API_URL: str = "https://api.fish.audio"

@@ -140,22 +140,42 @@ class VoiceCloneService:
             return response.json()
 
     async def _clone_with_fish_audio(self, task: dict) -> dict:
-        """使用 Fish Audio 引擎克隆"""
+        """
+        使用 Fish Audio 引擎克隆
+
+        API: POST https://api.fish.audio/model
+        Content-Type: multipart/form-data
+        必填字段: type=tts, title, train_mode=fast, voices(音频文件)
+        返回: {_id, title, state, ...}
+        """
         task["progress"] = 40
         async with httpx.AsyncClient() as client:
             response = await client.post(
-                f"{settings.FISH_AUDIO_API_URL}/v1/tts/voices",
-                files={"audio": ("recording.wav", task["audio_data"], "audio/wav")},
-                data={"name": task["voice_name"]},
+                f"{settings.FISH_AUDIO_API_URL}/model",
+                files={"voices": ("recording.wav", task["audio_data"], "audio/wav")},
+                data={
+                    "type": "tts",
+                    "title": task["voice_name"],
+                    "train_mode": "fast",
+                    "visibility": "private",
+                    "enhance_audio_quality": "true",
+                    "description": f"亲子伴读-{task['voice_role']}的声音",
+                },
                 headers={"Authorization": f"Bearer {settings.FISH_AUDIO_API_KEY}"},
                 timeout=300,
             )
             task["progress"] = 80
 
-            if response.status_code != 200:
+            if response.status_code not in (200, 201):
                 raise Exception(f"Fish Audio 克隆失败: {response.text}")
 
-            return response.json()
+            result = response.json()
+            # 返回模型信息，_id 即为后续TTS使用的 reference_id
+            return {
+                "model_id": result["_id"],
+                "title": result.get("title"),
+                "state": result.get("state"),
+            }
 
     async def _clone_with_elevenlabs(self, task: dict) -> dict:
         """使用 ElevenLabs 引擎克隆"""
