@@ -1,0 +1,33 @@
+{
+  "name": "parent-reading-business-service",
+  "version": "0.1.0",
+  "description": "亲子伴读App - 业务后端服务",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "@prisma/client": "^5.7.0",
+    "express-validator": "^7.0.1",
+    "express-rate-limit": "^7.1.4",
+    "http-proxy-middleware": "^2.0.6",
+    "redis": "^4.6.12",
+    "multer": "^1.4.5-lts.1",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prisma": "^5.7.0"
+  }
+}
