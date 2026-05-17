@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment
+.env
+.env.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Storage
+storage/
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Expo
+.expo/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# iOS
+ios/Pods/
+ios/build/
+
+# Android
+android/app/build/
+android/.gradle/
+
+# Docker
+docker/nginx/ssl/
+
+# Logs
+*.log
+npm-debug.log*

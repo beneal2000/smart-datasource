@@ -1,0 +1,136 @@
+// 亲子伴读 App - 数据库模型定义
+// 使用 Prisma ORM + PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id               String   @id @default(uuid())
+  phone            String   @unique
+  nickname         String?
+  avatarUrl        String?  @map("avatar_url")
+  childrenAge      Int?     @map("children_age")
+  subscriptionType String   @default("free") @map("subscription_type")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  voices      VoiceProfile[]
+  favorites   Favorite[]
+  playHistory PlayHistory[]
+
+  @@map("users")
+}
+
+// 声音档案表
+model VoiceProfile {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  voiceName       String   @map("voice_name")
+  voiceRole       String   @map("voice_role") // mother/father/grandma/grandpa
+  status          String   @default("processing") // processing/ready/failed
+  modelPath       String?  @map("model_path")
+  fishModelId     String?  @map("fish_model_id") // Fish Audio 模型ID
+  isDefault       Boolean  @default(false) @map("is_default")
+  sampleAudioUrl  String?  @map("sample_audio_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, voiceRole])
+  @@map("voice_profiles")
+}
+
+// 古诗表
+model Poem {
+  id           String  @id @default(uuid())
+  title        String
+  author       String
+  dynasty      String
+  content      String
+  pinyin       String? // 注音
+  translation  String? // 释义
+  appreciation String? // 赏析
+  grade        Int?    // 适合年级(1-6)
+  tags         String[] // 标签
+  emotion      String?  // 情感标签: gentle/happy/sad/excited/solemn/playful
+  poemStyle    String?  @map("poem_style") // 推荐朗诵风格: recite/chant/sing_song
+
+  favorites   Favorite[]
+  playHistory PlayHistory[]
+
+  @@map("poems")
+}
+
+// 故事表
+model Story {
+  id               String  @id @default(uuid())
+  title            String
+  content          String
+  summary          String
+  category         String  // fairy_tale/fable/science/history/bedtime
+  ageRange         String  @map("age_range") // 3-5/5-7/7-10
+  durationEstimate Int     @map("duration_estimate") // 预估阅读时长(秒)
+  coverImage       String? @map("cover_image")
+  wordCount        Int     @map("word_count")
+
+  favorites   Favorite[]
+  playHistory PlayHistory[]
+
+  @@map("stories")
+}
+
+// 收藏表
+model Favorite {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  contentType String   @map("content_type") // poem/story
+  poemId      String?  @map("poem_id")
+  storyId     String?  @map("story_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user  User   @relation(fields: [userId], references: [id])
+  poem  Poem?  @relation(fields: [poemId], references: [id])
+  story Story? @relation(fields: [storyId], references: [id])
+
+  @@unique([userId, contentType, poemId])
+  @@unique([userId, contentType, storyId])
+  @@map("favorites")
+}
+
+// 播放记录表
+model PlayHistory {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  contentType String   @map("content_type")
+  poemId      String?  @map("poem_id")
+  storyId     String?  @map("story_id")
+  voiceId     String   @map("voice_id")
+  duration    Int      // 实际播放时长(秒)
+  completed   Boolean  @default(false)
+  playedAt    DateTime @default(now()) @map("played_at")
+
+  user  User   @relation(fields: [userId], references: [id])
+  poem  Poem?  @relation(fields: [poemId], references: [id])
+  story Story? @relation(fields: [storyId], references: [id])
+
+  @@map("play_history")
+}
+
+// 背景音乐表
+model BackgroundMusic {
+  id       String @id @default(uuid())
+  name     String
+  category String // peaceful/happy/sleep/nature
+  duration Float
+  fileUrl  String @map("file_url")
+
+  @@map("background_music")
+}
