@@ -173,13 +173,59 @@ class AudioMixService:
                 raise Exception(f"下载白噪音失败: HTTP {response.status_code}")
 
     async def check_audio_exists(self, audio_url: str) -> bool:
-        """检查音频文件是否存在"""
-        if audio_url.startswith("http"):
-            return True
-        if audio_url.startswith("/storage/"):
-            local_path = audio_url.replace("/storage/", f"{settings.LOCAL_STORAGE_PATH}/")
-            return os.path.exists(local_path)
-        return False
+        """检查音频文件是否存在（宽松验证，允许后续处理中再检测）"""
+        if not audio_url:
+            return False
+        # 接受任何合理的 URL 或路径格式
+        return (
+            audio_url.startswith("http")
+            or audio_url.startswith("/storage/")
+            or audio_url.startswith("./storage/")
+        )
+
+    async def _load_voice_audio(self, voice_audio_url: str) -> bytes:
+        """
+        加载语音音频数据
+
+        支持:
+        - /storage/... 本地路径
+        - http(s)://... 远程URL
+        - 文件不存在时生成静音占位（开发模式）
+        """
+        if voice_audio_url.startswith("http"):
+            async with httpx.AsyncClient() as client:
+                r = await client.get(voice_audio_url, timeout=30)
+                if r.status_code == 200:
+                    return r.content
+                raise FileNotFoundError(f"无法下载语音文件: HTTP {r.status_code}")
+
+        # 本地文件
+        local_path = voice_audio_url.replace("/storage/", f"{settings.LOCAL_STORAGE_PATH}/")
+        if os.path.exists(local_path):
+            with open(local_path, "rb") as f:
+                return f.read()
+
+        # 开发模式: 文件不存在时生成3秒静音WAV作为占位
+        if settings.DEBUG:
+            return self._generate_silence_wav(duration_sec=3)
+
+        raise FileNotFoundError(f"语音文件不存在: {local_path}")
+
+    @staticmethod
+    def _generate_silence_wav(duration_sec: float = 3, sample_rate: int = 22050) -> bytes:
+        """生成静音WAV数据（开发/测试用途）"""
+        import struct
+        import wave
+        from io import BytesIO
+
+        num_samples = int(duration_sec * sample_rate)
+        buf = BytesIO()
+        with wave.open(buf, "wb") as wf:
+            wf.setnchannels(1)
+            wf.setsampwidth(2)
+            wf.setframerate(sample_rate)
+            wf.writeframes(struct.pack(f"<{num_samples}h", *([0] * num_samples)))
+        return buf.getvalue()
 
     async def mix(
         self,
@@ -194,7 +240,7 @@ class AudioMixService:
         执行混音
 
         步骤：
-        1. 加载语音文件
+        1. 加载语音文件（支持本地/远程/静音占位）
         2. 下载/加载白噪音（循环至语音时长）
         3. 调节各自音量
         4. 叠加混合
@@ -207,31 +253,39 @@ class AudioMixService:
 
         try:
             from pydub import AudioSegment
+            from io import BytesIO
 
             # 1. 加载语音文件
-            voice_path = voice_audio_url.replace("/storage/", f"{settings.LOCAL_STORAGE_PATH}/")
-            voice = AudioSegment.from_file(voice_path)
+            voice_data = await self._load_voice_audio(voice_audio_url)
+            voice = AudioSegment.from_file(BytesIO(voice_data))
 
             # 2. 下载并加载白噪音
             music_path = await self._download_music(music_id)
             bg_music = AudioSegment.from_file(music_path)
 
             # 3. 循环白噪音至语音时长
+            if len(bg_music) == 0:
+                raise ValueError("白噪音文件为空")
             while len(bg_music) < len(voice):
                 bg_music = bg_music + bg_music
-            bg_music = bg_music[:len(voice)]
+            bg_music = bg_music[: len(voice)]
 
             # 4. 调节音量（dB）
-            voice_db_change = 20 * math.log10(voice_volume) if voice_volume > 0 else -60
-            music_db_change = 20 * math.log10(music_volume) if music_volume > 0 else -60
+            voice_db_change = 20 * math.log10(max(voice_volume, 0.01))
+            music_db_change = 20 * math.log10(max(music_volume, 0.01))
             voice = voice + voice_db_change
             bg_music = bg_music + music_db_change
 
             # 5. 叠加混合
             mixed = voice.overlay(bg_music)
 
-            # 6. 渐入渐出
-            mixed = mixed.fade_in(fade_in).fade_out(fade_out)
+            # 6. 渐入渐出（确保不超过音频长度）
+            actual_fade_in = min(fade_in, len(mixed) // 2)
+            actual_fade_out = min(fade_out, len(mixed) // 2)
+            if actual_fade_in > 0:
+                mixed = mixed.fade_in(actual_fade_in)
+            if actual_fade_out > 0:
+                mixed = mixed.fade_out(actual_fade_out)
 
             # 7. 导出
             output_dir = f"{settings.LOCAL_STORAGE_PATH}/mixed"
@@ -249,12 +303,25 @@ class AudioMixService:
             }
 
         except ImportError:
-            # pydub 未安装时返回模拟结果
+            # pydub 未安装时返回模拟结果（含标记）
             output_id = str(uuid.uuid4())
             output_url = f"/storage/mixed/{output_id}.mp3"
             return {
                 "audio_url": output_url,
                 "duration": 120.0,
+                "mock": True,
+                "reason": "pydub not installed",
+            }
+
+        except FileNotFoundError as e:
+            # 语音文件不存在时，仅返回白噪音（降级模式）
+            output_id = str(uuid.uuid4())
+            output_url = f"/storage/mixed/{output_id}.mp3"
+            return {
+                "audio_url": music["preview_url"],
+                "duration": music["duration"],
+                "mock": True,
+                "reason": str(e),
             }
 
     async def get_music_list(

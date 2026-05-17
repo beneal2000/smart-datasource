@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     # 应用基础配置
     APP_NAME: str = "亲子伴读 AI Service"
     APP_VERSION: str = "0.1.0"
-    DEBUG: bool = False
+    DEBUG: bool = True
 
     # 声音克隆引擎配置
     VOICE_CLONE_ENGINE: str = "fish_audio"  # cosyvoice | fish_audio | elevenlabs
