@@ -56,40 +56,69 @@ class TTSService:
         speed: float = 1.0,
         emotion: str = "gentle",
         content_type: str = "poem",
+        poem_style: Optional[str] = None,
+        pause_scale: float = 1.0,
+        poem_type: Optional[str] = None,
     ) -> dict:
         """
         合成语音
 
-        根据内容类型自动优化合成参数：
-        - poem: 增加停顿，注意平仄
-        - story: 自然语气，适当抑扬
-        - song: 韵律感增强
+        根据内容类型和情感韵律引擎自动优化合成参数：
+        - poem: 使用ProsodyEngine计算停顿、语速、音调
+        - story: 段落停顿、对话语气
+        - 情感自适应：根据内容自动检测或使用指定情感
 
         降级策略：外部API失败时自动切换到本地Mock模式
         """
-        # 文本预处理（针对古诗添加停顿标记）
-        processed_text = self._preprocess_text(text, content_type)
+        from app.services.prosody_engine import prosody_engine
 
-        # 尝试调用克隆引擎的TTS接口
+        # 1. 计算韵律参数
+        prosody_params = prosody_engine.compute_prosody(
+            emotion=emotion,
+            poem_style=poem_style,
+            poem_type=poem_type,
+            speed_override=speed if speed != 1.0 else None,
+            pause_scale_override=pause_scale if pause_scale != 1.0 else None,
+        )
+
+        # 2. 文本韵律预处理
+        if content_type == "poem":
+            processed_text = prosody_engine.preprocess_poem_text(
+                text=text,
+                poem_type=poem_type,
+                poem_style=poem_style,
+                pause_scale=prosody_params.pause_scale,
+            )
+        elif content_type == "story":
+            processed_text = prosody_engine.preprocess_story_text(
+                text=text,
+                emotion=emotion,
+                pause_scale=prosody_params.pause_scale,
+            )
+        else:
+            processed_text = self._preprocess_text(text, content_type)
+
+        # 3. 尝试调用克隆引擎的TTS接口
         try:
             if self.engine == "cosyvoice":
                 audio_url, duration = await self._synthesize_cosyvoice(
-                    voice_id, processed_text, speed, emotion
+                    voice_id, processed_text, prosody_params.speed, emotion
                 )
             elif self.engine == "fish_audio":
                 audio_url, duration = await self._synthesize_fish_audio(
-                    voice_id, processed_text, speed
+                    voice_id, processed_text, prosody_params.speed,
+                    prosody_params=prosody_params,
                 )
             else:
                 audio_url, duration = await self._synthesize_elevenlabs(
-                    voice_id, processed_text, speed
+                    voice_id, processed_text, prosody_params.speed
                 )
         except Exception as e:
             # 外部API失败，降级到本地Mock
             print(f"⚠️ TTS引擎({self.engine})失败，降级到Mock模式: {e}")
-            audio_url, duration = await self._synthesize_mock(text, speed)
+            audio_url, duration = await self._synthesize_mock(text, prosody_params.speed)
 
-        # 缓存结果
+        # 4. 缓存结果
         cache_key = self._get_cache_key(voice_id, text, speed)
         self._cache[cache_key] = audio_url
 
@@ -171,7 +200,8 @@ class TTSService:
     # ============================================================
 
     async def _synthesize_fish_audio(
-        self, voice_id: str, text: str, speed: float
+        self, voice_id: str, text: str, speed: float,
+        prosody_params=None,
     ) -> tuple:
         """
         Fish Audio TTS合成
@@ -180,31 +210,46 @@ class TTSService:
         Header: model: s2-pro, Authorization: Bearer <key>
         Body: {text, reference_id, prosody: {speed}, format, ...}
         返回: 音频流（chunked）
+
+        情感韵律：通过 prosody_params 传递 temperature/top_p/speed/volume
         """
         # 清理SSML标记（Fish Audio不支持SSML break标签）
         clean_text = text
         import re
         clean_text = re.sub(r"<break[^>]*/>", "", clean_text)
+        clean_text = clean_text.replace("~", "")  # 清理吟诵标记
+
+        # 构建请求体
+        request_body = {
+            "text": clean_text,
+            "reference_id": voice_id,
+            "format": "mp3",
+            "sample_rate": 44100,
+            "mp3_bitrate": 128,
+            "latency": "normal",
+            "normalize": True,
+            "chunk_length": 300,
+        }
+
+        # 应用韵律参数
+        if prosody_params:
+            from app.services.prosody_engine import prosody_engine
+            fish_params = prosody_engine.get_fish_audio_params(prosody_params)
+            request_body.update(fish_params)
+        else:
+            request_body.update({
+                "temperature": 0.7,
+                "top_p": 0.7,
+                "prosody": {
+                    "speed": speed,
+                    "volume": 0,
+                },
+            })
 
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 f"{settings.FISH_AUDIO_API_URL}/v1/tts",
-                json={
-                    "text": clean_text,
-                    "reference_id": voice_id,
-                    "temperature": 0.7,
-                    "top_p": 0.7,
-                    "prosody": {
-                        "speed": speed,
-                        "volume": 0,
-                    },
-                    "format": "mp3",
-                    "sample_rate": 44100,
-                    "mp3_bitrate": 128,
-                    "latency": "normal",
-                    "normalize": True,
-                    "chunk_length": 300,
-                },
+                json=request_body,
                 headers={
                     "Authorization": f"Bearer {settings.FISH_AUDIO_API_KEY}",
                     "model": "s2-pro",

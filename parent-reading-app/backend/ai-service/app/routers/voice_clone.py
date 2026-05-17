@@ -7,6 +7,9 @@ from app.models.schemas import (
     VoiceCloneResponse,
     VoiceCloneStatus,
     VoiceProfileResponse,
+    FamilyVoicesResponse,
+    VoiceSwitchRequest,
+    SetDefaultVoiceRequest,
 )
 from app.services.voice_clone_service import VoiceCloneService
 
@@ -26,6 +29,7 @@ async def create_voice_clone(
     创建声音克隆
 
     家长上传3-10分钟的清晰录音，系统提取声纹特征并创建克隆模型。
+    支持同一家庭多角色录音：爸爸、妈妈、爷爷、奶奶。
     该过程为异步处理，返回任务ID供后续查询状态。
     """
     # 验证文件格式
@@ -85,6 +89,67 @@ async def get_voice_profiles(user_id: str):
     """获取用户的所有声音模型"""
     profiles = await voice_service.get_user_profiles(user_id)
     return profiles
+
+
+@router.get("/family/{user_id}", response_model=FamilyVoicesResponse)
+async def get_family_voices(user_id: str):
+    """
+    获取家庭声音列表
+
+    返回该用户下所有角色的声音档案，含默认声音标识。
+    用于播放界面的声音切换选择器。
+    """
+    profiles = await voice_service.get_user_profiles(user_id)
+    default_voice = await voice_service.get_default_voice(user_id)
+
+    return FamilyVoicesResponse(
+        user_id=user_id,
+        voices=profiles,
+        default_voice_id=default_voice,
+        total=len(profiles),
+    )
+
+
+@router.post("/switch")
+async def switch_voice(request: VoiceSwitchRequest):
+    """
+    切换当前使用的声音
+
+    验证声音属于该用户后，切换为当前活跃声音。
+    后续TTS合成将使用新选择的声音。
+    """
+    success = await voice_service.switch_active_voice(
+        user_id=request.user_id,
+        voice_id=request.voice_id,
+    )
+    if not success:
+        raise HTTPException(status_code=404, detail="声音不存在或不属于该用户")
+
+    return {"message": "声音切换成功", "active_voice_id": request.voice_id}
+
+
+@router.post("/default")
+async def set_default_voice(request: SetDefaultVoiceRequest):
+    """
+    设置默认声音
+
+    设定孩子打开App时默认使用的声音。
+    """
+    success = await voice_service.set_default_voice(
+        user_id=request.user_id,
+        voice_id=request.voice_id,
+    )
+    if not success:
+        raise HTTPException(status_code=404, detail="声音不存在")
+
+    return {"message": "默认声音设置成功", "default_voice_id": request.voice_id}
+
+
+@router.get("/profiles/{user_id}/role/{role}")
+async def get_voices_by_role(user_id: str, role: str):
+    """按角色获取声音列表（如获取所有"妈妈"的声音）"""
+    profiles = await voice_service.get_profiles_by_role(user_id, role)
+    return {"voices": profiles, "role": role, "total": len(profiles)}
 
 
 @router.delete("/profiles/{user_id}/{voice_id}")

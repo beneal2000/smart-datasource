@@ -30,31 +30,38 @@ model User {
 
 // 声音档案表
 model VoiceProfile {
-  id        String   @id @default(uuid())
-  userId    String   @map("user_id")
-  voiceName String   @map("voice_name")
-  voiceRole String   @map("voice_role") // mother/father/grandma/grandpa
-  status    String   @default("processing") // processing/ready/failed
-  modelPath String?  @map("model_path")
-  createdAt DateTime @default(now()) @map("created_at")
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  voiceName       String   @map("voice_name")
+  voiceRole       String   @map("voice_role") // mother/father/grandma/grandpa
+  status          String   @default("processing") // processing/ready/failed
+  modelPath       String?  @map("model_path")
+  fishModelId     String?  @map("fish_model_id") // Fish Audio 模型ID
+  isDefault       Boolean  @default(false) @map("is_default")
+  sampleAudioUrl  String?  @map("sample_audio_url")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id])
 
+  @@index([userId, voiceRole])
   @@map("voice_profiles")
 }
 
 // 古诗表
 model Poem {
-  id          String  @id @default(uuid())
-  title       String
-  author      String
-  dynasty     String
-  content     String
-  pinyin      String? // 注音
-  translation String? // 释义
+  id           String  @id @default(uuid())
+  title        String
+  author       String
+  dynasty      String
+  content      String
+  pinyin       String? // 注音
+  translation  String? // 释义
   appreciation String? // 赏析
-  grade       Int?    // 适合年级(1-6)
-  tags        String[] // 标签
+  grade        Int?    // 适合年级(1-6)
+  tags         String[] // 标签
+  emotion      String?  // 情感标签: gentle/happy/sad/excited/solemn/playful
+  poemStyle    String?  @map("poem_style") // 推荐朗诵风格: recite/chant/sing_song
 
   favorites   Favorite[]
   playHistory PlayHistory[]

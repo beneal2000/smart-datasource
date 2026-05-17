@@ -49,6 +49,8 @@ async def synthesize_speech(request: TTSRequest):
         speed=request.speed,
         emotion=request.emotion,
         content_type=request.content_type,
+        poem_style=request.poem_style,
+        pause_scale=request.pause_scale,
     )
 
     return TTSResponse(

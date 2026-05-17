@@ -22,6 +22,8 @@ class VoiceCloneService:
         # 内存存储（MVP阶段，后期替换为DB）
         self._tasks: Dict[str, dict] = {}
         self._profiles: Dict[str, List[dict]] = {}
+        self._defaults: Dict[str, str] = {}  # user_id -> default voice_id
+        self._active_voices: Dict[str, str] = {}  # user_id -> active voice_id
 
     async def get_audio_duration(self, audio_data: bytes) -> float:
         """获取音频文件时长(秒)"""
@@ -213,6 +215,7 @@ class VoiceCloneService:
     async def get_user_profiles(self, user_id: str) -> List[dict]:
         """获取用户的声音档案列表"""
         profiles = self._profiles.get(user_id, [])
+        default_id = self._defaults.get(user_id)
         return [
             {
                 "voice_id": p["voice_id"],
@@ -220,9 +223,66 @@ class VoiceCloneService:
                 "voice_role": p["voice_role"],
                 "status": p["status"],
                 "created_at": p["created_at"],
-                "sample_audio_url": None,
+                "sample_audio_url": p.get("sample_audio_url"),
+                "is_default": p["voice_id"] == default_id,
+                "fish_audio_model_id": p.get("model_data", {}).get("model_id") if isinstance(p.get("model_data"), dict) else None,
             }
             for p in profiles
+        ]
+
+    async def get_default_voice(self, user_id: str) -> Optional[str]:
+        """获取用户默认声音ID"""
+        return self._defaults.get(user_id)
+
+    async def set_default_voice(self, user_id: str, voice_id: str) -> bool:
+        """设置默认声音"""
+        profiles = self._profiles.get(user_id, [])
+        if not any(p["voice_id"] == voice_id for p in profiles):
+            return False
+        self._defaults[user_id] = voice_id
+        return True
+
+    async def switch_active_voice(self, user_id: str, voice_id: str) -> bool:
+        """切换当前活跃声音（验证归属后切换）"""
+        profiles = self._profiles.get(user_id, [])
+        target = next((p for p in profiles if p["voice_id"] == voice_id), None)
+        if not target:
+            return False
+        if target["status"] != "ready":
+            return False
+        # 记录活跃声音
+        self._active_voices[user_id] = voice_id
+        return True
+
+    async def get_active_voice(self, user_id: str) -> Optional[str]:
+        """获取当前活跃声音ID"""
+        active = self._active_voices.get(user_id)
+        if active:
+            return active
+        # 如果没有活跃声音，使用默认
+        default = self._defaults.get(user_id)
+        if default:
+            return default
+        # 使用第一个ready的声音
+        profiles = self._profiles.get(user_id, [])
+        ready = [p for p in profiles if p["status"] == "ready"]
+        return ready[0]["voice_id"] if ready else None
+
+    async def get_profiles_by_role(self, user_id: str, role: str) -> List[dict]:
+        """按角色获取声音列表"""
+        profiles = self._profiles.get(user_id, [])
+        filtered = [p for p in profiles if p["voice_role"] == role]
+        default_id = self._defaults.get(user_id)
+        return [
+            {
+                "voice_id": p["voice_id"],
+                "voice_name": p["voice_name"],
+                "voice_role": p["voice_role"],
+                "status": p["status"],
+                "created_at": p["created_at"],
+                "is_default": p["voice_id"] == default_id,
+            }
+            for p in filtered
         ]
 
     async def delete_profile(self, user_id: str, voice_id: str) -> bool:
@@ -231,5 +291,10 @@ class VoiceCloneService:
         for i, p in enumerate(profiles):
             if p["voice_id"] == voice_id:
                 profiles.pop(i)
+                # 清除相关默认/活跃设置
+                if self._defaults.get(user_id) == voice_id:
+                    del self._defaults[user_id]
+                if self._active_voices.get(user_id) == voice_id:
+                    del self._active_voices[user_id]
                 return True
         return False

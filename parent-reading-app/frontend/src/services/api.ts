@@ -63,6 +63,13 @@ export const voiceAPI = {
     }),
   getCloneStatus: (taskId: string) => api.get(`/ai/voice/clone/status/${taskId}`),
   getVoiceProfiles: (userId: string) => api.get(`/ai/voice/profiles/${userId}`),
+  getFamilyVoices: (userId: string) => api.get(`/ai/voice/family/${userId}`),
+  getVoicesByRole: (userId: string, role: string) =>
+    api.get(`/ai/voice/profiles/${userId}/role/${role}`),
+  switchVoice: (userId: string, voiceId: string) =>
+    api.post('/ai/voice/switch', { user_id: userId, voice_id: voiceId }),
+  setDefault: (userId: string, voiceId: string) =>
+    api.post('/ai/voice/default', { user_id: userId, voice_id: voiceId }),
   deleteVoice: (userId: string, voiceId: string) =>
     api.delete(`/ai/voice/profiles/${userId}/${voiceId}`),
 };
@@ -77,6 +84,9 @@ export const playAPI = {
     music_id?: string;
     voice_volume?: number;
     music_volume?: number;
+    emotion?: string;
+    poem_style?: string;
+    pause_scale?: number;
   }) => api.post('/play/generate', params),
   recordPlay: (params: any) => api.post('/play/record', params),
   getHistory: (params?: any) => api.get('/play/history', { params }),
